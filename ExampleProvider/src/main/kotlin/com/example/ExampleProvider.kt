@@ -1,4 +1,4 @@
-package com.example
+package com.lagradost
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
@@ -9,7 +9,7 @@ class PokemothimProvider : MainAPI() {
     override var lang = "pt"
     override val hasMainPage = true
 
-    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse? {
+    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val animeList = listOf(
             AnimeSearchResponse(
                 "Pokémon: Liga Índigo",
@@ -38,7 +38,6 @@ class PokemothimProvider : MainAPI() {
         val document = app.get(mainUrl + url).document
         val episodes = mutableListOf<Episode>()
         
-        // Captura todos os links de episódios no HTML do site
         document.select("a[href*=/episodios]").forEachIndexed { index, element ->
             val epUrl = element.attr("href")
             val epName = element.text()
@@ -63,7 +62,6 @@ class PokemothimProvider : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        // Redireciona para o link de vídeo final do Blogger ou Drive hospedado na página do episódio
         val document = app.get(data).document
         val iframeUrl = document.select("iframe").attr("src")
         
@@ -82,4 +80,3 @@ class PokemothimProvider : MainAPI() {
         return true
     }
 }
-// teste
