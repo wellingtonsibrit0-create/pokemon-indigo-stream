@@ -82,3 +82,4 @@ class PokemothimProvider : MainAPI() {
         return true
     }
 }
+// teste
